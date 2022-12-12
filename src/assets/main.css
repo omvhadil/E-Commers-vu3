@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-size: 1rem;
+  background-color: rgb(245, 245, 245);
+  overflow-x: hidden;
+}
+.containers {
+  max-width: 100%;
+}
+.section {
+  padding: 0 100px;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+img {
+  width: 100%;
+  height: auto;
+}
+.grid {
+  display: grid;
+}
+.curpoin {
+  cursor: pointer;
+}
+.text-small {
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 576px) {
+  .section {
+    padding: 0 1rem;
+  }
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background: rgb(69, 70, 69);
+}
