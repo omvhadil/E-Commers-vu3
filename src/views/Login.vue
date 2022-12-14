@@ -61,16 +61,14 @@ const data = reactive({
               />
             </div>
             <div class="d-grid">
-              <button class="btn btn-success text-white mt-2" type="submit">
-                Masuk
-              </button>
+              <button class="btn btn_masuk mt-2" type="submit">Masuk</button>
             </div>
             <div class="text-center mt-3">
               <p>
                 belum punya akun?
                 <span
                   @click="router.push('/register')"
-                  class="text-success fw-bold"
+                  class="daftar_title fw-bold"
                   role="button"
                   tabindex="0"
                   >Daftar disini</span
@@ -95,5 +93,12 @@ const data = reactive({
 }
 .container {
   overflow: hidden;
+}
+.daftar_title {
+  color: var(--first-color);
+}
+.btn_masuk {
+  background-color: var(--first-color);
+  color: var(--text-color-light);
 }
 </style>

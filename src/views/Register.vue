@@ -63,16 +63,14 @@ const onRegister = () => {
               />
             </div>
             <div class="d-grid">
-              <button class="btn btn-success text-white mt-2" type="submit">
-                Daftar
-              </button>
+              <button class="btn btn_daftar mt-2" type="submit">Daftar</button>
             </div>
             <div class="text-center mt-3">
               <p>
                 sudah punya akun?
                 <span
                   @click="router.push('/login')"
-                  class="text-success fw-bold"
+                  class="login_title fw-bold"
                   role="button"
                   tabindex="0"
                   >Masuk disini</span
@@ -97,5 +95,12 @@ const onRegister = () => {
 }
 .container {
   overflow: hidden;
+}
+.login_title {
+  color: var(--first-color);
+}
+.btn_daftar {
+  background-color: var(--first-color);
+  color: var(--text-color-light);
 }
 </style>

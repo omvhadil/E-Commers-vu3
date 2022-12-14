@@ -1,21 +1,34 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { debounce } from "lodash";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Textsearch } from "../stores/product";
 
 const router = useRouter();
+
+const navbar = ref(null);
+
+window.onscroll = function () {
+  var scrollUp = window.pageYOffset;
+  if (scrollUp > 80) {
+    navbar.value.classList.add("shadow-sm", "bg-light");
+  } else {
+    navbar.value.classList.remove("shadow-sm", "bg-light");
+  }
+};
 
 const delaySearch = debounce((e) => {
   Textsearch.value = e.target.value;
 }, 500);
 </script>
 <template>
-  <nav class="navbar navbar-light navbar-expand-lg shadow-sm">
+  <nav
+    class="navbar navbar-light navbar-expand-lg position-fixed top-0 w-100"
+    ref="navbar"
+  >
     <div class="container-fluid section">
-      <a class="navbar-brand text-success" style="font-weight: 800">
-        ALABIMSHOP
-      </a>
+      <a class="navbar-brand" style="font-weight: 800"> ALABIMSHOP </a>
       <form>
         <input
           class="form-control me-2 nav-search"
@@ -39,16 +52,6 @@ const delaySearch = debounce((e) => {
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto gap-4">
-          <!-- ===== button login ================ -->
-          <!-- <button
-            @click="router.push('/login')"
-            class="btn d-flex align-items-center btn-success"
-            type="submit"
-          >
-            <i class="ri-login-box-line icon text-white me-2"></i>
-            <span>Login</span>
-          </button> -->
-          <!-- ========== Ketika sudah login ============= -->
           <!-- ========== list ============= -->
           <li class="nav-item nav_link d-flex" style="align-items: center">
             <i class="ri-list-check text-dark icon me-1"></i>
@@ -161,17 +164,31 @@ const delaySearch = debounce((e) => {
               </ul>
             </div>
           </li>
+          <!-- ===== button login ================ -->
+          <button
+            @click="router.push('/login')"
+            class="btn d-flex align-items-center btn_login"
+            type="submit"
+          >
+            <i class="ri-login-box-line icon text-white me-2"></i>
+            <span>Login</span>
+          </button>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-<style scope>
-.title-icon {
-  padding: 0;
-  margin: 0;
-  font-size: 0.8rem;
-  color: #000;
+<style scoped>
+.navbar {
+  height: 5rem;
+  background-color: var(--body-color);
+}
+.navbar-brand {
+  font-size: 2rem;
+  color: var(--first-color);
+}
+.icon {
+  font-size: 1.3rem;
 }
 .nav-item {
   cursor: pointer;
@@ -182,18 +199,33 @@ const delaySearch = debounce((e) => {
   overflow: hidden;
   border-radius: 50%;
 }
-.navbar-toggler {
-  border: none;
+.btn_login {
+  display: inline-flex;
+  background-color: var(--first-color);
+  color: var(--text-color-light);
 }
+
 .navbar-toggler:focus {
   box-shadow: none;
 }
 .text_menu {
   display: none;
 }
+.navbar-toggler {
+  border: none;
+}
+.navbar-collapse.show {
+  background-color: var(--body-color);
+}
 /* ======= small ================ */
 
-@media screen and (max-width: 393px) {
+@media screen and (max-width: 567px) {
+  .title-icon {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #000;
+  }
   .nav-search {
     width: 200px;
   }
