@@ -34,7 +34,6 @@ defineProps({
 </template>
 <style scoped>
 .card-product {
-  width: 170px;
   background-color: #fff;
   overflow: hidden;
 }

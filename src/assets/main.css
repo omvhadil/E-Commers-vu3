@@ -1,3 +1,12 @@
+:root {
+  --first-color: hsl(250, 50%, 50%);
+  --first-color-alt: hsl(250, 30%, 30%);
+  --first-color-light: hsl(250, 10%, 70%);
+  --title-colort: hsl(250, 4%, 15%);
+  --text-colort: hsl(250, 4%, 32%);
+  --text-color-light: hsl(250, 4%, 95%);
+  --body-color: hsl(250, 0%, 100%);
+}
 * {
   margin: 0;
   padding: 0;
