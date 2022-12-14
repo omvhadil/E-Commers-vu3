@@ -88,7 +88,7 @@ const delaySearch = debounce((e) => {
                       style="width: 60px; height: 60px; overflow: hidden"
                     >
                       <img
-                        src="../assets/jam-tangan1.jfif"
+                        src="../assets/hero-login.jpg"
                         style="height: 100%; object-fit: cover"
                       />
                     </div>
@@ -107,7 +107,7 @@ const delaySearch = debounce((e) => {
                       style="width: 60px; height: 60px; overflow: hidden"
                     >
                       <img
-                        src="../assets/jam-tangan1.jfif"
+                        src="../assets/hero-login.jpg"
                         style="height: 100%; object-fit: cover"
                       />
                     </div>
