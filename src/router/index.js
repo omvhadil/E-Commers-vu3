@@ -21,7 +21,25 @@ const router = createRouter({
         {
           path: "/tokosaya",
           name: "toko saya",
-          component: () => import("../views/TokoSaya.vue"),
+          component: () => import("../views/productPenjual/TokoSaya.vue"),
+          children: [
+            {
+              path: "",
+              name: "toko saya",
+              component: () =>
+                import("../views/productPenjual/ProductToko.vue"),
+            },
+            {
+              path: "/tokosaya/diminati",
+              name: "diminati",
+              component: () => import("../views/productPenjual/Diminati.vue"),
+            },
+            {
+              path: "/tokosaya/terjual",
+              name: "terjual",
+              component: () => import("../views/productPenjual/Tejual.vue"),
+            },
+          ],
         },
         {
           path: "/profilesaya",

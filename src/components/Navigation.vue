@@ -4,9 +4,10 @@ import { debounce } from "lodash";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Textsearch } from "../stores/product";
+import { useAuthStore } from "../stores";
 
+const autStore = useAuthStore();
 const router = useRouter();
-
 const navbar = ref(null);
 
 window.onscroll = function () {
@@ -16,6 +17,9 @@ window.onscroll = function () {
   } else {
     navbar.value.classList.remove("shadow-sm", "bg-light");
   }
+};
+const onlogOut = () => {
+  autStore.logOut();
 };
 
 const delaySearch = debounce((e) => {
@@ -122,7 +126,11 @@ const delaySearch = debounce((e) => {
             </div>
           </li>
           <!-- ========== Profile ===================== -->
-          <li class="nav-item d-flex" style="align-items: center">
+          <li
+            v-if="autStore.getToken"
+            class="nav-item d-flex"
+            style="align-items: center"
+          >
             <div class="btn-group">
               <div
                 class="card-image me-3"
@@ -153,11 +161,7 @@ const delaySearch = debounce((e) => {
                   </span>
                 </li>
                 <li>
-                  <span
-                    @click="router.push('/login')"
-                    class="dropdown-item"
-                    href="#"
-                  >
+                  <span @click="onlogOut" class="dropdown-item" href="#">
                     Log Out
                   </span>
                 </li>
@@ -166,6 +170,7 @@ const delaySearch = debounce((e) => {
           </li>
           <!-- ===== button login ================ -->
           <button
+            v-else
             @click="router.push('/login')"
             class="btn d-flex align-items-center btn_login"
             type="submit"

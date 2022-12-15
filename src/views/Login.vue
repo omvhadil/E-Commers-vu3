@@ -2,28 +2,23 @@
 <script setup>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../stores";
 const router = useRouter();
 
 const data = reactive({
   form: {
-    namaUser: "",
+    email: "",
     password: "",
   },
 });
 
-// const onLogin = async () => {
-//   const getLogin = {
-//     username: data.form.namaUser,
-//     password: data.form.password,
-//   };
-//   await postUsers(getLogin)
-//     .then(({ data }) => {
-//       console.log(data);
-//     })
-//     .catch(() => {
-//       alert("salah cuy");
-//     });
-// };
+const onLogin = async () => {
+  const getLogin = {
+    email: data.form.email,
+    password: data.form.password,
+  };
+  await useAuthStore().postUsers(getLogin);
+};
 </script>
 <template>
   <div class="container p-0" style="max-width: 100%">
@@ -40,7 +35,7 @@ const data = reactive({
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Email</label>
               <input
-                v-model="data.form.namaUser"
+                v-model="data.form.email"
                 type="text"
                 placeholder="username"
                 class="form-control"

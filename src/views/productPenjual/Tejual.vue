@@ -1,10 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup></script>
 <template>
-  <div
-    class="container section d-flex justify-content-center align-items-center"
-    style="height: 80vh"
-  >
+  <div>
     <div class="text-center">
       <h1>page Terjual</h1>
       <br />
