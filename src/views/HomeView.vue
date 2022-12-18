@@ -1,43 +1,16 @@
 <script setup>
-import { watchEffect, reactive, onMounted, ref } from "vue";
-import { getProduct, getCategori } from "../plugin/Api";
+import { watchEffect, onMounted } from "vue";
 import MyCard from "../components/CardProduct.vue";
-import { Textsearch } from "../stores/product";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../stores";
 
 const router = useRouter();
-const products = reactive({
-  product: [],
-  perPage: 30,
-  categori: [],
-  idCategori: 0,
-});
-const productScroll = ref(null);
-const onGetProduct = async () => {
-  getProduct({
-    page: 2,
-    per_page: products.perPage,
-    category_id: products.idCategori || null,
-    search: Textsearch.value || null,
-  }).then(({ data }) => {
-    products.product = data;
-  });
-};
-const onGetCategori = async () => {
-  getCategori().then(({ data }) => {
-    console.log();
-    products.categori = data;
-  });
-};
-const loadMore = () => {
-  products.perPage += 30;
-};
+
 watchEffect(() => {
-  onGetProduct();
+  useAuthStore().getProduct();
 });
 onMounted(() => {
-  onGetCategori();
-  // window.addEventListener("scroll", handleScroll);
+  useAuthStore().getCategory();
 });
 </script>
 <template>
@@ -51,9 +24,11 @@ onMounted(() => {
         style="width: 100%; overflow-x: auto"
       >
         <button
-          @click="products.idCategori = 0"
+          @click="useAuthStore().idCategori = 0"
           :class="
-            products.idCategori == 0 ? 'btn-category-active' : 'btn-category'
+            useAuthStore().idCategori == 0
+              ? 'btn-category-active'
+              : 'btn-category'
           "
           class="btn d-flex gap-1"
           type="button"
@@ -61,11 +36,11 @@ onMounted(() => {
           <i class="ri-search-line"></i>Semua
         </button>
         <button
-          v-for="item in products.categori"
+          v-for="item in useAuthStore().categori"
           :key="item.id"
-          @click="products.idCategori = item.id"
+          @click="useAuthStore().idCategori = item.id"
           :class="
-            products.idCategori == item.id
+            useAuthStore().idCategori == item.id
               ? 'btn-category-active'
               : 'btn-category'
           "
@@ -80,7 +55,7 @@ onMounted(() => {
     <!-- ============ peoduct ============== -->
     <div class="list-product mt-3" ref="productScroll">
       <MyCard
-        v-for="item in products.product"
+        v-for="item in useAuthStore().product"
         :key="item.id"
         @click="router.push('/detailproduct/' + item.id)"
         :image="item.image_url"
@@ -89,7 +64,9 @@ onMounted(() => {
         :categori="item.Categories"
       />
     </div>
-    <button @click="loadMore" class="btn_loadmore">Load More</button>
+    <button @click="useAuthStore().loadMore()" class="btn_loadmore">
+      Load More
+    </button>
   </section>
 </template>
 <style scoped>

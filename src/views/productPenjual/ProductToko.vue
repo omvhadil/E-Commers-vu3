@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 import { instance } from "../../plugin/Api";
-import { useAuthStore } from "../../stores";
 import MyCard from "../../components/CardProduct.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const dataProduct = reactive({
   data: [],
@@ -10,17 +12,11 @@ const dataProduct = reactive({
 
 const onGetProduct = () => {
   instance
-    .get("/seller/product", {
-      headers: {
-        access_token: useAuthStore().getToken,
-      },
-    })
+    .get("/seller/product")
     .then((res) => {
       dataProduct.data = res.data;
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch(() => {});
 };
 
 onMounted(() => {
@@ -31,7 +27,7 @@ onMounted(() => {
   <div
     class="card-product add-product border rounded p-2 d-flex align-items-center justify-content-center"
   >
-    <div class="text-center">
+    <div @click="router.push('/formtambahproduct')" class="text-center">
       <i class="ri-add-circle-line"></i>
       <p>tambah product</p>
     </div>

@@ -1,33 +1,33 @@
 <script setup>
-import { onMounted, reactive } from "vue";
+// import { onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { instance } from "../../plugin/Api";
-import { useAuthStore } from "../../stores";
+// import { instance } from "../../plugin/Api";
+// import { useAuthStore } from "../../stores";
 
 const router = useRouter();
 
-const dataProduct = reactive({
-  data: [],
-});
+// const dataProduct = reactive({
+//   data: [],
+// });
 
-const onGetProduct = () => {
-  instance
-    .get("/seller/product", {
-      headers: {
-        access_token: useAuthStore().getToken,
-      },
-    })
-    .then((res) => {
-      dataProduct.data = res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// const onGetProduct = () => {
+//   instance
+//     .get("/seller/product", {
+//       headers: {
+//         access_token: useAuthStore().getToken,
+//       },
+//     })
+//     .then((res) => {
+//       dataProduct.data = res.data;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
-onMounted(() => {
-  onGetProduct();
-});
+// onMounted(() => {
+//   onGetProduct();
+// });
 </script>
 <template>
   <div class="containers section">
@@ -65,18 +65,21 @@ onMounted(() => {
         <h6>Kategori</h6>
         <div class="mt-2">
           <RouterLink
+            exact-active-class="actived"
             to="/tokosaya"
             class="cursor d-flex gap-2 text-dark pt-2 pb-2 text-success cursor-pointer"
             ><i class="ri-codepen-line"></i>
             <p class="m-0">Semua Kategori</p></RouterLink
           >
           <RouterLink
+            exact-active-class="actived"
             to="/tokosaya/diminati"
             class="cursor d-flex gap-2 text-dark pt-2 pb-2 text-success cursor-pointer"
             ><i class="ri-codepen-line"></i>
             <p class="m-0">Dimanati</p></RouterLink
           >
           <RouterLink
+            exact-active-class="actived"
             to="/tokosaya/terjual"
             class="cursor d-flex gap-2 text-dark pt-2 pb-2 text-success cursor-pointer"
             ><i class="ri-codepen-line"></i>
@@ -105,8 +108,8 @@ onMounted(() => {
   height: 100%;
   object-fit: cover;
 }
-.router-link-active {
-  color: var(--first-color);
+.actived {
+  color: var(--first-color) !important;
   font-weight: 600;
 }
 .container_product_saya {
@@ -138,6 +141,9 @@ onMounted(() => {
   }
   .col-kategori {
     width: 100%;
+  }
+  .content-product {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
