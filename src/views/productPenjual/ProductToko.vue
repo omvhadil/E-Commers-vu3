@@ -36,6 +36,7 @@ onMounted(() => {
   <MyCard
     v-for="item in dataProduct.data"
     :key="item.id"
+    @click="router.push('/detailsellerproduct/' + item.id)"
     :image="item.image_url"
     :title="item.name"
     :price="item.base_price"

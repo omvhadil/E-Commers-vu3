@@ -14,8 +14,13 @@ const router = createRouter({
           component: () => import("../views/HomeView.vue"),
         },
         {
+          path: "/detailsellerproduct/:id",
+          name: "deatil seller peoduct",
+          component: () => import("../views/detailSellerProduct.vue"),
+        },
+        {
           path: "/reviewproduct",
-          name: "review peoduct",
+          name: "review",
           component: () => import("../views/ReviewProduct.vue"),
         },
         {

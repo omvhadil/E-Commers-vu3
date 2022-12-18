@@ -32,7 +32,13 @@ const delaySearch = debounce((e) => {
     ref="navbar"
   >
     <div class="container-fluid section">
-      <a class="navbar-brand" style="font-weight: 800"> ALABIMSHOP </a>
+      <a
+        @click="router.push('/')"
+        class="navbar-brand"
+        style="font-weight: 800"
+      >
+        ALABIMSHOP
+      </a>
       <form>
         <input
           class="form-control me-2 nav-search"
@@ -191,6 +197,7 @@ const delaySearch = debounce((e) => {
 .navbar-brand {
   font-size: 2rem;
   color: var(--first-color);
+  cursor: pointer;
 }
 .icon {
   font-size: 1.3rem;

@@ -22,13 +22,13 @@ const onLogin = async () => {
 </script>
 <template>
   <div class="container p-0" style="max-width: 100%">
-    <div class="row">
-      <div class="col-6">
+    <div class="grid">
+      <div class="box_image">
         <div style="width: 100%; height: 100vh">
           <img src="../assets/hero-login.jpg" alt="" class="image-hero" />
         </div>
       </div>
-      <div class="col-6 d-flex align-items-center justify-content-center">
+      <div class="box-daftar d-flex align-items-center justify-content-center">
         <div class="content-login">
           <form @submit.prevent="onLogin">
             <h2 class="mb-3">Masuk</h2>
@@ -95,5 +95,23 @@ const onLogin = async () => {
 .btn_masuk {
   background-color: var(--first-color);
   color: var(--text-color-light);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.box-daftar {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .box_image {
+    display: none;
+  }
 }
 </style>

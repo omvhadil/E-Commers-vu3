@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", {
     userData: JSON.parse(localStorage.getItem("users")) || null,
     product: [],
     productId: [],
+    productSellerId: [],
     categori: [],
     perPage: 30,
     idCategori: 0,
@@ -94,8 +95,14 @@ export const useAuthStore = defineStore("auth", {
       });
     },
     // =========== Get Seller Detail Product =======
-    async postProduct(tambah) {
-      await instance.post("/seller/product", tambah).then(() => {
+    async getProductIdSeller(idProduct) {
+      await instance.get("/seller/product/" + idProduct).then((Response) => {
+        this.productSellerId = Response.data;
+      });
+    },
+    // =========== Post Seller Detail Product =======
+    async postProduct(ttt) {
+      await instance.post("/seller/product", ttt).then(() => {
         router.push("/tokosaya");
         Swal.fire({
           position: "top-center",
@@ -104,6 +111,12 @@ export const useAuthStore = defineStore("auth", {
           showConfirmButton: false,
           timer: 1500,
         });
+      });
+    },
+    // =========== Post Seller Detail Product =======
+    async delProduct(item) {
+      await instance.delete("/seller/product/" + item).then(() => {
+        router.push("/tokosaya");
       });
     },
   },

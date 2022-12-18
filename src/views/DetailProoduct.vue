@@ -1,9 +1,8 @@
 <script setup>
 import { onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { useAuthStore } from "../stores";
 
-const router = useRouter();
 const idProduct = useRoute().params.id;
 
 onMounted(() => {
@@ -27,9 +26,10 @@ onMounted(() => {
           <h5 class="mt-2">{{ useAuthStore().productId.base_price }}</h5>
           <div class="d-grid gap-2 mt-4">
             <button
-              @click="router.push('/formtambahproduct')"
-              class="btn btn-terbitkan"
               type="button"
+              class="btn btn-terbitkan btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
             >
               Saya tertarik dan ingin nego
             </button>
@@ -61,9 +61,136 @@ onMounted(() => {
         expedita?
       </p>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Modal title
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div> -->
+          <div class="modal-body">
+            <h5 class="modal_title">Masukkan Harga Tawaranmu</h5>
+            <p class="modal_subtitle">
+              Harga tawaranmu akan diketahui penual, jika penjual cocok kamu
+              akan segera dihubungi penjual.
+            </p>
+            <div class="modal_product">
+              <div class="modal_img_product">
+                <img src="../assets/profile2.jpg" />
+              </div>
+              <div class="modal_info_product">
+                <h3 class="modal_info_product_title">Pemuas Birahi</h3>
+                <p class="modal_info_product_kota">Rp 350.000</p>
+              </div>
+            </div>
+            <div class="form_tawar">
+              <h3 class="form-tawar_title">Ditawar</h3>
+              <input type="text" />
+            </div>
+            <div>
+              <button class="btn_kirim">Kirim</button>
+            </div>
+            <button type="button" class="modal_close" data-bs-dismiss="modal">
+              X
+            </button>
+          </div>
+          <!-- <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 <style scoped>
+.modal-dialog {
+  max-width: 20rem;
+}
+.modal-content {
+  padding-top: 2rem;
+}
+.modal_title {
+  font-size: 1rem;
+}
+.modal_subtitle {
+  font-size: 0.813rem;
+}
+.modal_product {
+  width: 100%;
+  background-color: rgb(241, 240, 240);
+  display: flex;
+  padding: 0.3rem 0.5rem;
+  border-radius: 1rem;
+}
+.modal_img_product {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-right: 0.5rem;
+}
+.modal_info_product_title {
+  font-size: 1rem;
+  margin: 0;
+}
+.modal_info_product_kota {
+  font-size: 0.813rem;
+}
+.form_tawar {
+  margin-top: 0.7rem;
+}
+.form-tawar_title {
+  font-size: 1rem;
+  margin: 0;
+}
+.form_tawar input {
+  width: 100%;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-top: 0.3rem;
+}
+.btn_kirim {
+  width: 100%;
+  border: none;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--first-color);
+  color: var(--text-color-light);
+  border-radius: 1rem;
+}
+.btn_kirim:hover {
+  background-color: var(--first-color-alt);
+}
+.modal_close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
 .section {
   margin-top: 7rem;
 }
@@ -124,6 +251,7 @@ onMounted(() => {
   width: 50%;
   background-color: var(--body-color);
 }
+
 @media screen and (max-width: 767px) {
   .wrap {
     grid-template-columns: 1fr;
