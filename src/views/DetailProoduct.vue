@@ -127,7 +127,7 @@ onMounted(() => {
 </template>
 <style scoped>
 .modal-dialog {
-  max-width: 20rem;
+  width: 20rem;
 }
 .modal-content {
   padding-top: 2rem;
@@ -270,6 +270,9 @@ onMounted(() => {
   }
   .card_description {
     width: 100%;
+  }
+  .modal-dialog {
+    width: 96%;
   }
 }
 </style>

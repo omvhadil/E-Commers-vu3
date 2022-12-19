@@ -33,6 +33,15 @@ const setFile = (e) => {
   data.form.image = e.target.files[0];
   data.form.preview = URL.createObjectURL(data.form.image);
 };
+
+const onReview = () => {
+  router.push({
+    name: "review",
+    params: {
+      state: data.form,
+    },
+  });
+};
 onMounted(() => {
   useAuthStore().getCategory();
 });
@@ -88,7 +97,7 @@ onMounted(() => {
         <!-- ============== Button simpan ========= -->
         <div class="d-flex gap-2 mt-4" style="width: 100%">
           <button
-            @click="router.push('/reviewproduct')"
+            @click.prevent="onReview"
             class="btn btn_review"
             style="width: 50%"
             type="button"

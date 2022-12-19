@@ -62,14 +62,14 @@ const router = useRouter();
     </div>
     <div class="container_product_saya gap-3" style="width: 100%">
       <div class="col-kategori border rounded">
-        <h6>Kategori</h6>
+        <h6>Toko saya</h6>
         <div class="mt-2">
           <RouterLink
             exact-active-class="actived"
             to="/tokosaya"
             class="cursor d-flex gap-2 text-dark pt-2 pb-2 text-success cursor-pointer"
             ><i class="ri-codepen-line"></i>
-            <p class="m-0">Semua Kategori</p></RouterLink
+            <p class="m-0">Semua Product</p></RouterLink
           >
           <RouterLink
             exact-active-class="actived"

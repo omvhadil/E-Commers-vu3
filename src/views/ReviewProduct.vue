@@ -1,18 +1,9 @@
 <script setup>
-import { onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores";
 
 const router = useRouter();
-const idSellerProduct = useRoute().params.id;
-
-const delProduct = () => {
-  useAuthStore().delProduct(idSellerProduct);
-};
-
-onMounted(() => {
-  useAuthStore().getProductIdSeller(idSellerProduct);
-});
+// const idSellerProduct = useRoute().params.id;
 </script>
 <template>
   <section class="section containers">
@@ -29,9 +20,7 @@ onMounted(() => {
         >
         <h5 class="mt-2">{{ useAuthStore().productSellerId.base_price }}</h5>
         <div class="d-grid gap-2 mt-4">
-          <button @click="delProduct" class="btn btn-hapus" type="button">
-            Hapus Product
-          </button>
+          <button class="btn btn-terbitkan" type="button">Terbitkan</button>
           <button
             @click="router.push('/formtambahproduct')"
             class="btn btn-edit"
@@ -91,8 +80,8 @@ onMounted(() => {
   background-color: var(--first-color);
   color: var(--text-color-light);
 }
-.btn-hapus {
-  background-color: red;
+.btn-terbitkan {
+  background-color: var(--first-color);
   color: var(--text-color-light);
 }
 .card_description {

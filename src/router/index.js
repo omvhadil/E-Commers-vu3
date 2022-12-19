@@ -21,6 +21,9 @@ const router = createRouter({
         {
           path: "/reviewproduct",
           name: "review",
+          props: (router) => ({
+            ...router.params,
+          }),
           component: () => import("../views/ReviewProduct.vue"),
         },
         {
