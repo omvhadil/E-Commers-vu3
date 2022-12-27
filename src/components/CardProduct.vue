@@ -50,9 +50,9 @@ const customStatus = (status) => {
         >
       </div>
       <h6>Rp. {{ price }}</h6>
-      <p v-if="nego">Ditawar : {{ nego }}</p>
-      <span :class="customStatus(status)" v-if="status">{{ status }}</span>
+      <p class="m-0" v-if="nego">Ditawar : {{ nego }}</p>
       <p v-if="date">{{ formatDate(date) }}</p>
+      <span :class="customStatus(status)" v-if="status">{{ status }}</span>
     </div>
   </div>
 </template>

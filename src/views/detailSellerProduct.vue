@@ -15,7 +15,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <section class="section containers">
+  <section id="bodi" class="mains">
     <div class="wrap mt-4 grid">
       <div class="card_image">
         <img :src="useAuthStore().productSellerId.image_url" class="image" />
@@ -60,9 +60,6 @@ onMounted(() => {
   </section>
 </template>
 <style scoped>
-.section {
-  margin-top: 7rem;
-}
 .wrap {
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;

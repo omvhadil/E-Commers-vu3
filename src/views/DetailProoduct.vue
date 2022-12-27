@@ -26,10 +26,25 @@ onMounted(() => {
 });
 </script>
 <template>
-  <section class="section containers">
-    <div class="wrap mt-4 grid">
+  <section id="bodi" class="mains">
+    <div class="detail_product_container">
       <div class="card_image">
-        <img :src="useAuthStore().productId.image_url" class="image" />
+        <img :src="useAuthStore().productId.image_url" />
+      </div>
+      <div class="card_description">
+        <h5>Description</h5>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
+          nulla ducimus ea, officia deserunt maxime culpa, omnis quod numquam
+          quibusdam saepe sed laborum assumenda nobis repudiandae ab cupiditate
+          obcaecati expedita?
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
+          nulla ducimus ea, officia deserunt maxime culpa, omnis quod numquam
+          quibusdam saepe sed laborum assumenda nobis repudiandae ab cupiditate
+          obcaecati expedita?
+        </p>
       </div>
       <div>
         <div class="card-detail border rounded p-3">
@@ -43,7 +58,7 @@ onMounted(() => {
           <div v-if="!isOrdered" class="d-grid gap-2 mt-4">
             <button
               type="button"
-              class="btn btn-terbitkan btn-primary"
+              class="btn btn-tertarik"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
             >
@@ -69,21 +84,6 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="card_description mt-3 border rounded p-2">
-      <h5>Description</h5>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus nulla
-        ducimus ea, officia deserunt maxime culpa, omnis quod numquam quibusdam
-        saepe sed laborum assumenda nobis repudiandae ab cupiditate obcaecati
-        expedita?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus nulla
-        ducimus ea, officia deserunt maxime culpa, omnis quod numquam quibusdam
-        saepe sed laborum assumenda nobis repudiandae ab cupiditate obcaecati
-        expedita?
-      </p>
-    </div>
     <!-- Modal -->
     <div
       class="modal fade"
@@ -96,17 +96,6 @@ onMounted(() => {
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <!-- <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              Modal title
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div> -->
           <div class="modal-body">
             <h5 class="modal_title">Masukkan Harga Tawaranmu</h5>
             <p class="modal_subtitle">
@@ -115,11 +104,15 @@ onMounted(() => {
             </p>
             <div class="modal_product">
               <div class="modal_img_product">
-                <img src="../assets/profile2.jpg" />
+                <img :src="useAuthStore().productId.image_url" />
               </div>
               <div class="modal_info_product">
-                <h3 class="modal_info_product_title">Pemuas Birahi</h3>
-                <p class="modal_info_product_kota">Rp 350.000</p>
+                <h3 class="modal_info_product_title">
+                  {{ useAuthStore().productId.name }}
+                </h3>
+                <p class="modal_info_product_kota">
+                  Rp. {{ useAuthStore().productId.base_price }}
+                </p>
               </div>
             </div>
             <form @submit.prevent="postTawaran">
@@ -135,22 +128,65 @@ onMounted(() => {
               X
             </button>
           </div>
-          <!-- <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Understood</button>
-          </div> -->
         </div>
       </div>
     </div>
   </section>
 </template>
 <style scoped>
+/* ============= */
+.detail_product_container {
+  display: grid;
+  grid-template-columns: 400px 350px auto;
+  gap: 1rem;
+}
+/* === Image Product === */
+.card_image {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+/* === card Product === */
+.card-detail {
+  width: 350px;
+  background-color: var(--body-color);
+}
+.btn-tertarik {
+  background-color: var(--first-color);
+  color: #fff;
+}
+/* === info Penjual === */
+.info_penjual {
+  width: 350px;
+  background-color: var(--body-color);
+  margin-top: 1rem;
+  padding: 0.5rem;
+  column-gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.penjual_image {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.info_penjual_title {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.info_penjual_kota {
+  font-size: 0.813rem;
+}
+/* === Description === */
+.card_description {
+  background-color: var(--body-color);
+  padding: 1rem;
+  border: 1px solid rgb(228, 227, 227);
+}
+/* === Modal === */
 .modal-dialog {
   width: 20rem;
 }
@@ -165,10 +201,11 @@ onMounted(() => {
 }
 .modal_product {
   width: 100%;
-  background-color: rgb(241, 240, 240);
+  background-color: rgb(247, 247, 247);
   display: flex;
   padding: 0.3rem 0.5rem;
   border-radius: 1rem;
+  border: 1px solid rgb(224, 223, 223);
 }
 .modal_img_product {
   width: 50px;
@@ -216,67 +253,6 @@ onMounted(() => {
   top: 1rem;
   right: 1rem;
 }
-.section {
-  margin-top: 7rem;
-}
-.wrap {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.image {
-  height: 100%;
-  object-fit: cover;
-}
-.card_image {
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
-  border-radius: 1rem;
-}
-.card-detail {
-  width: 400px;
-  background-color: var(--body-color);
-}
-.btn-edit {
-  border: 1px solid var(--first-color);
-  color: var(--title-color);
-}
-.btn-terbitkan {
-  background-color: var(--first-color);
-  color: var(--text-color-light);
-}
-.penjual_image {
-  width: 50px;
-  height: 50px;
-  border-radius: 0.5rem;
-  overflow: hidden;
-}
-.penjual_image img {
-  height: 100%;
-  object-fit: cover;
-}
-.info_penjual {
-  width: 400px;
-  background-color: var(--body-color);
-  margin-top: 1rem;
-  padding: 0.5rem;
-  column-gap: 0.5rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.info_penjual_title {
-  font-size: 1.25rem;
-  margin: 0;
-}
-.info_penjual_kota {
-  font-size: 0.813rem;
-}
-.card_description {
-  width: 50%;
-  background-color: var(--body-color);
-}
-
 @media screen and (max-width: 767px) {
   .wrap {
     grid-template-columns: 1fr;

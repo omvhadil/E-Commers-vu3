@@ -23,7 +23,9 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="containers section">
+  <div id="bodi" class="mains">
+    <h5 class="title">productmu yang di tawar</h5>
+    <!-- ===== Penawar ===== -->
     <div class="box_info_penawar">
       <div class="image_penawar">
         <img :src="useSellerStore().penawar.User?.image_url" alt="" />
@@ -37,7 +39,7 @@ onMounted(() => {
         }}</span>
       </div>
     </div>
-    <h5>productmu yang di tawar</h5>
+    <!-- ===== Product yng di tawar ===== -->
     <div class="product_ditawar">
       <div class="image_product">
         <img
@@ -48,18 +50,18 @@ onMounted(() => {
       </div>
       <div class="detail_ditawar">
         <p class="subtitle">
-          <span class="subtitle_text">Productmu yang si tawar</span>
+          <span class="subtitle_text">Productmu yang di tawar</span>
           <span class="subtitle_date">{{
             formatDate(useSellerStore().penawar.updatedAt)
           }}</span>
         </p>
-        <h5 class="detail_ditawar_name">
+        <h5 class="detail_ditawar_name m-0">
           {{ useSellerStore().penawar.Product?.name }}
         </h5>
-        <p class="detail_ditawar_price m-0">
+        <del class="detail_ditawar_price m-0">
           Rp.
           {{ useSellerStore().penawar.base_price }}
-        </p>
+        </del>
         <h5 class="detail_ditawar_tawar">
           Rp.
           {{ useSellerStore().penawar.price }}
@@ -87,18 +89,17 @@ onMounted(() => {
   </div>
 </template>
 <style scoped>
-.section {
-  margin-top: 7rem;
+.title {
+  margin-bottom: 1rem;
 }
+/* === Penawar === */
 .box_info_penawar {
   border: 1px solid #ccc;
-  border-radius: 1rem;
   padding: 0.5rem;
   display: flex;
-  align-items: center;
   column-gap: 1rem;
   background-color: #fff;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 .info_penawar_title {
   font-size: 1.25rem;
@@ -117,6 +118,7 @@ onMounted(() => {
 .image_penawar img {
   width: 100%;
 }
+/* === Yang Ditawar === */
 .product_ditawar {
   border: 1px solid #ccc;
   padding: 1rem;
@@ -125,8 +127,8 @@ onMounted(() => {
   background-color: #fff;
 }
 .image_product {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   overflow: hidden;
   border-radius: 1rem;
 }
@@ -136,7 +138,8 @@ onMounted(() => {
 }
 .detail_ditawar_tawar {
   font-size: 1rem;
-  color: var(--first-color);
+  color: #000;
+  margin-bottom: 1rem;
 }
 .btnku {
   padding: 0.3rem 1rem;

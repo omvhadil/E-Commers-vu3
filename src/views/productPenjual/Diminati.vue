@@ -13,18 +13,16 @@ watchEffect(() => {
 });
 </script>
 <template>
-  <div class="container_diminati">
-    <MyCard
-      v-for="item in sellerStore.orderProduct"
-      :key="item.id"
-      @click="router.push('/infopenawar/' + item.id)"
-      :image="item.image_product"
-      :title="item.product_name"
-      :price="item.base_price"
-      :nego="item.price"
-      :status="item.status"
-      :date="item.updatedAt"
-    />
-  </div>
+  <MyCard
+    v-for="item in sellerStore.orderProduct"
+    :key="item.id"
+    @click="router.push('/infopenawar/' + item.id)"
+    :image="item.image_product"
+    :title="item.product_name"
+    :price="item.base_price"
+    :nego="item.price"
+    :status="item.status"
+    :date="item.updatedAt"
+  />
 </template>
 <style scoped></style>

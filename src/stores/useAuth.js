@@ -68,6 +68,7 @@ export const useAuthStore = defineStore("auth", {
           alert(err);
         });
     },
+    // ========== Get User ==============
     async getUser() {
       await instance.get("/auth/user").then((res) => {
         this.userId = res.data;
