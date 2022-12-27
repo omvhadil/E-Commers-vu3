@@ -1,12 +1,28 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "../stores";
+import { useBuyerStore } from "../stores/useBayerOrder";
 
 const idProduct = useRoute().params.id;
+const form = ref();
+const defaultAvatar = `https://ui-avatars.com/api/?name=${
+  useAuthStore().productId.User?.full_name
+}`;
+
+const postTawaran = () => {
+  useBuyerStore().PostBuyerOrder(form.value, idProduct);
+};
+
+const isOrdered = computed(() => {
+  return useBuyerStore().orderBuyer.find((e) => {
+    return e.product_id == idProduct;
+  });
+});
 
 onMounted(() => {
   useAuthStore().getProductId(idProduct);
+  useBuyerStore().getBuyerOrder();
 });
 </script>
 <template>
@@ -24,7 +40,7 @@ onMounted(() => {
             >{{ item.name }}</span
           >
           <h5 class="mt-2">{{ useAuthStore().productId.base_price }}</h5>
-          <div class="d-grid gap-2 mt-4">
+          <div v-if="!isOrdered" class="d-grid gap-2 mt-4">
             <button
               type="button"
               class="btn btn-terbitkan btn-primary"
@@ -37,11 +53,18 @@ onMounted(() => {
         </div>
         <div class="info_penjual border">
           <div class="penjual_image">
-            <img src="../assets/hero-login.jpg" alt="" />
+            <img
+              :src="useAuthStore().productId.User?.image_url ?? defaultAvatar"
+              alt=""
+            />
           </div>
           <div class="penjual">
-            <h3 class="info_penjual_title">Fadilatur Rohman</h3>
-            <p class="info_penjual_kota">Probolinggo</p>
+            <h3 class="info_penjual_title">
+              {{ useAuthStore().productId.User?.full_name }}
+            </h3>
+            <p class="info_penjual_kota">
+              {{ useAuthStore().productId.User?.city ?? "-" }}
+            </p>
           </div>
         </div>
       </div>
@@ -99,13 +122,15 @@ onMounted(() => {
                 <p class="modal_info_product_kota">Rp 350.000</p>
               </div>
             </div>
-            <div class="form_tawar">
-              <h3 class="form-tawar_title">Ditawar</h3>
-              <input type="text" />
-            </div>
-            <div>
-              <button class="btn_kirim">Kirim</button>
-            </div>
+            <form @submit.prevent="postTawaran">
+              <div class="form_tawar">
+                <h3 class="form-tawar_title">Ditawar</h3>
+                <input v-model="form" type="text" />
+              </div>
+              <div>
+                <button class="btn_kirim">Kirim</button>
+              </div>
+            </form>
             <button type="button" class="modal_close" data-bs-dismiss="modal">
               X
             </button>

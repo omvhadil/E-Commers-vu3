@@ -6,11 +6,16 @@ import { useAuthStore } from "../stores";
 const router = useRouter();
 
 const data = reactive({
+  showPassword: "password",
   form: {
     email: "",
     password: "",
   },
 });
+
+const showPass = () => {
+  data.showPassword = data.showPassword === "password" ? "text" : "password";
+};
 
 const onLogin = async () => {
   const getLogin = {
@@ -47,13 +52,26 @@ const onLogin = async () => {
               <label for="exampleInputPassword1" class="form-label"
                 >Password</label
               >
-              <input
-                v-model="data.form.password"
-                type="password"
-                placeholder="Password"
-                class="form-control"
-                id="exampleInputPassword1"
-              />
+              <div class="d-flex gap-2 align-items-center">
+                <input
+                  v-model="data.form.password"
+                  :type="data.showPassword"
+                  placeholder="Password"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                />
+                <div
+                  @click="showPass"
+                  class="show_password"
+                  style="cursor: pointer"
+                >
+                  <i
+                    v-if="data.showPassword === 'password'"
+                    class="ri-eye-off-fill"
+                  ></i>
+                  <i v-else class="ri-eye-fill"></i>
+                </div>
+              </div>
             </div>
             <div class="d-grid">
               <button class="btn btn_masuk mt-2" type="submit">Masuk</button>
@@ -105,6 +123,16 @@ const onLogin = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.show_password {
+  background-color: rgb(212, 213, 214);
+  color: var(--title-color);
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+}
+.show_password:hover {
+  background-color: rgb(161, 161, 161);
+  color: var(--title-color);
 }
 @media screen and (max-width: 767px) {
   .grid {

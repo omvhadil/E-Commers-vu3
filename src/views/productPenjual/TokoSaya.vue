@@ -1,33 +1,11 @@
 <script setup>
-// import { onMounted, reactive } from "vue";
-import { useRouter } from "vue-router";
-// import { instance } from "../../plugin/Api";
-// import { useAuthStore } from "../../stores";
+// import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores";
+import { onMounted } from "vue";
 
-const router = useRouter();
-
-// const dataProduct = reactive({
-//   data: [],
-// });
-
-// const onGetProduct = () => {
-//   instance
-//     .get("/seller/product", {
-//       headers: {
-//         access_token: useAuthStore().getToken,
-//       },
-//     })
-//     .then((res) => {
-//       dataProduct.data = res.data;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-
-// onMounted(() => {
-//   onGetProduct();
-// });
+onMounted(() => {
+  useAuthStore().getUser();
+});
 </script>
 <template>
   <div class="containers section">
@@ -40,23 +18,18 @@ const router = useRouter();
         <div class="col-profile d-flex">
           <div class="card-image me-2" style="width: 50px; height: 50px">
             <img
-              src="../../assets/Profile.jpg"
+              :src="useAuthStore().userId.image_url"
               class="rounded me-3 img-profile"
             />
           </div>
           <div>
-            <h6 class="m-0">Fadilatur Rohman</h6>
-            <span style="color: #aaa">Probolinggo</span>
+            <h6 class="m-0">{{ useAuthStore().userId.full_name }}</h6>
+            <span style="color: #aaa">{{ useAuthStore().userId.city }}</span>
           </div>
         </div>
         <div class="col-edit">
-          <button
-            @click="router.push('/forminfoakun')"
-            type="button"
-            class="btn btn-outline-success"
-          >
-            Edit
-          </button>
+          <!-- @click="router.push('/forminfoakun')" -->
+          <button type="button" class="btn btn-outline-success">Edit</button>
         </div>
       </div>
     </div>

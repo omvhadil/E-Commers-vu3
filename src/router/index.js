@@ -55,6 +55,11 @@ const router = createRouter({
           component: () => import("../views/ProfileSaya.vue"),
         },
         {
+          path: "/tawaransaya",
+          name: "tawaran saya",
+          component: () => import("../views/TawaranSaya.vue"),
+        },
+        {
           path: "/forminfoakun",
           name: "Info Akun",
           component: () => import("../views/FormInfoAkun.vue"),
@@ -65,7 +70,7 @@ const router = createRouter({
           component: () => import("../views/FormTambahProduct.vue"),
         },
         {
-          path: "/infopenawar",
+          path: "/infopenawar/:id",
           name: "Info Penawar",
           component: () => import("../views/InfoPenawar.vue"),
         },

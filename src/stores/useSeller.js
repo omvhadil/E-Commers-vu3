@@ -4,6 +4,8 @@ import { instance } from "../plugin";
 export const useSellerStore = defineStore("seller", {
   state: () => ({
     orderProduct: [],
+    banner: [],
+    penawar: {},
   }),
   getters: {},
   actions: {
@@ -17,6 +19,22 @@ export const useSellerStore = defineStore("seller", {
         .then(({ data }) => {
           this.orderProduct = data;
         });
+    },
+    // ======== Get Seller Banner =====
+    async getSellerBanner() {
+      await instance.get("/seller/banner").then((res) => {
+        this.banner = res.data;
+      });
+    },
+    // ======== Get Penawar product ===
+    async getPenawarProduct(getPenawarProduct) {
+      await instance.get("/seller/order/" + getPenawarProduct).then((res) => {
+        this.penawar = res.data;
+      });
+    },
+    // ======== Post Seller Order ===
+    async postSellerOrder(id, status) {
+      await instance.patch("/seller/order/" + id, status);
     },
   },
 });

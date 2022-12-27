@@ -1,28 +1,70 @@
 <script setup>
+import { reactive } from "vue";
 import MyInput from "../components/MyInput.vue";
-import MyTextarea from "../components/MyTextarea.vue";
-import MySelect from "../components/MySelect.vue";
-import { ref } from "vue";
+import { useAuthStore } from "../stores";
 
-const kota = ref(["Probolinggo", "Jombang"]);
+const data = reactive({
+  form: {
+    fullname: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    address: "",
+    city: "",
+    image: "",
+    preview: "",
+  },
+});
+
+const putUser = () => {
+  const formData = new FormData();
+  formData.append("full_name", data.form.fullname);
+  formData.append("email", data.form.email);
+  formData.append("password", data.form.password);
+  formData.append("phone_number", data.form.phoneNumber);
+  formData.append("address", data.form.address);
+  formData.append("city", data.form.city);
+  formData.append("image", data.form.image);
+  useAuthStore().putUser(formData);
+};
+
+const setFile = (e) => {
+  data.form.image = e.target.files[0];
+  data.form.preview = URL.createObjectURL(data.form.image);
+};
 </script>
 <template>
   <div class="container section">
     <div class="wrap ms-auto me-auto mt-5 pb-5">
-      <div
-        class="card-image-profile curpoin d-flex align-items-center justify-content-center"
-      >
-        <i class="ri-camera-line" style="font-size: 2rem"></i>
-        <input type="file" />
-      </div>
-      <MyInput title="nama" type="text" />
-      <MySelect title="Kota" :data="kota" />
-      <MyTextarea title="Alamat" />
-      <MyInput title="Nomor Telepon" />
+      <form @submit.prevent="putUser">
+        <div
+          v-if="data.form.image"
+          class="card-image-profile curpoin d-flex align-items-center justify-content-center"
+        >
+          <img :src="data.form.preview" alt="" />
+        </div>
+        <div
+          v-else
+          class="card-image-profile curpoin d-flex align-items-center justify-content-center"
+        >
+          <i class="ri-camera-line" style="font-size: 2rem"></i>
+          <input @input="setFile" type="file" />
+        </div>
+
+        <MyInput v-model="data.form.fullname" title="full nama" type="text" />
+        <MyInput v-model="data.form.email" title="Email" type="email" />
+        <MyInput
+          v-model="data.form.phoneNumber"
+          title="phone number"
+          type="number"
+        />
+        <MyInput v-model="data.form.address" title="address" type="text" />
+        <MyInput v-model="data.form.city" title="city" type="text" />
+        <div class="d-grid mt-4">
+          <button class="btn btn_simpan" type="submit">Simpan</button>
+        </div>
+      </form>
       <!-- ============== Button simpan ========= -->
-      <div class="d-grid mt-4">
-        <button class="btn btn_simpan" type="button">Simpan</button>
-      </div>
     </div>
   </div>
 </template>

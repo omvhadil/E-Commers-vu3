@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
+    userId: {},
     userData: JSON.parse(localStorage.getItem("users")) || null,
     product: [],
     productId: [],
@@ -14,6 +15,7 @@ export const useAuthStore = defineStore("auth", {
     perPage: 30,
     idCategori: 0,
     Textsearch: "",
+    loading: false,
   }),
   getters: {
     // ======== Access Token ========
@@ -66,6 +68,23 @@ export const useAuthStore = defineStore("auth", {
           alert(err);
         });
     },
+    async getUser() {
+      await instance.get("/auth/user").then((res) => {
+        this.userId = res.data;
+      });
+    },
+    async putUser(data) {
+      await instance.put("/auth/user", data).then(() => {
+        router.push("/tokosaya");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your work has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+    },
     // =========== Get Category ======
     async getCategory() {
       await instance.get("/seller/category").then(({ data }) => {
@@ -75,6 +94,7 @@ export const useAuthStore = defineStore("auth", {
     },
     // =========== Get Buyer Product ===
     async getProduct() {
+      this.loading = true;
       await instance
         .get("/buyer/product", {
           params: {
@@ -86,6 +106,7 @@ export const useAuthStore = defineStore("auth", {
         })
         .then(({ data }) => {
           this.product = data;
+          this.loading = false;
         });
     },
     // =========== Get Buyer Detail Product =======
