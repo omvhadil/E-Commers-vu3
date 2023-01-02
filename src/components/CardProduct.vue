@@ -61,6 +61,7 @@ const customStatus = (status) => {
   background-color: #fff;
   overflow: hidden;
   position: relative;
+  border: 1px solid #ccc;
 }
 .product-image {
   width: 100%;

@@ -5,12 +5,22 @@ export const useNotifStore = defineStore("notif", {
   state: () => ({
     notification: [],
   }),
-  getters: {},
+  getters: {
+    jmlNotif() {
+      return this.notification.length;
+    },
+  },
   actions: {
     async getNotif() {
-      await instance.get("/notification").then((res) => {
-        this.notification = res.data;
-      });
+      await instance
+        .get("/notification", {
+          params: {
+            notification_type: "",
+          },
+        })
+        .then((res) => {
+          this.notification = res.data;
+        });
     },
   },
 });

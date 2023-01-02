@@ -56,7 +56,7 @@ onMounted(() => {
       </button>
     </div>
     <!-- ============ Category ============== -->
-    <div class="kategori mt-2">
+    <div class="kategori mt-3">
       <h6>Telusuri Kategori</h6>
       <div
         class="box-categori d-flex gap-2 pb-2"
@@ -70,7 +70,6 @@ onMounted(() => {
               ? 'btn-category-active'
               : 'btn-category'
           "
-          class="btn d-flex gap-1"
           type="button"
         >
           <i class="ri-search-line"></i>Semua
@@ -84,7 +83,6 @@ onMounted(() => {
               ? 'btn-category-active'
               : 'btn-category'
           "
-          class="btn d-flex gap-1"
           style="white-space: nowrap"
           type="button"
         >
@@ -106,7 +104,7 @@ onMounted(() => {
       </div>
     </div>
     <!-- ============ Product ============== -->
-    <div v-else class="list-product mt-3" ref="productScroll">
+    <div v-else class="list-product mt-1" ref="productScroll">
       <MyCard
         v-for="item in useAuthStore().product"
         :key="item.id"
@@ -156,16 +154,26 @@ onMounted(() => {
 .list-product {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
+  gap: 0.5rem;
 }
 /* === Category ===*/
-.btn-category {
+.btn-category,
+.btn-category-active {
   background-color: var(--first-color-light);
   color: var(--text-color-light);
+  padding: 0.3rem 0.5rem;
+  display: flex;
+  align-items: center;
+  border: none;
+  font-size: var(--smaller-font-size);
+  border-radius: 0.5rem;
 }
 .btn-category-active {
   background-color: var(--first-color);
   color: var(--text-color-light);
+}
+.btn-category:hover {
+  background-color: var(--first-color);
 }
 .btn_loadmore {
   padding: 0.3rem 1.3rem;

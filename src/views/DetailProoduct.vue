@@ -143,9 +143,8 @@ onMounted(() => {
 /* === Image Product === */
 .card_image {
   width: 100%;
-  height: 500px;
+  height: 400px;
   overflow: hidden;
-  border-radius: 1rem;
 }
 /* === card Product === */
 .card-detail {

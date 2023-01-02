@@ -5,6 +5,7 @@ import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Textsearch } from "../stores/product";
 import { useAuthStore, useNotifStore } from "../stores";
+import { formatDate } from "../plugin";
 
 const autStore = useAuthStore();
 const router = useRouter();
@@ -13,16 +14,13 @@ const dropdown = reactive({
   notif: false,
 });
 const navbar = ref(null);
-const logo = ref(null);
 
 window.onscroll = function () {
   var scrollUp = window.pageYOffset;
   if (scrollUp > 80) {
     navbar.value.classList.add("bg-scrool");
-    logo.value.classList.add("logo-scrool");
   } else {
     navbar.value.classList.remove("bg-scrool");
-    logo.value.classList.remove("logo-scrool");
   }
 };
 const onlogOut = () => {
@@ -33,6 +31,7 @@ const delaySearch = debounce((e) => {
 }, 500);
 onMounted(() => {
   useNotifStore().getNotif();
+  useAuthStore().getUser();
 });
 </script>
 <template>
@@ -42,9 +41,7 @@ onMounted(() => {
   >
     <div class="container-fluid" id="bodi">
       <!-- === Logo === -->
-      <a ref="logo" @click="router.push('/')" class="navbar-brand">
-        ♻ SecondHand
-      </a>
+      <a @click="router.push('/')" class="navbar-brand"> 🉑 SecondHand </a>
       <!-- === Searcing === -->
       <form>
         <input
@@ -71,33 +68,69 @@ onMounted(() => {
         <ul class="navbar-nav ms-auto gap-4">
           <li @click="router.push('/tokosaya')" class="nav-item">
             <div class="nav_icon">
-              <i class="ri-list-check text-dark"></i>
+              <i class="ri-store-2-fill"></i>
             </div>
           </li>
           <li @click="dropdown.notif = !dropdown.notif" class="nav-item">
             <div class="nav_icon nav_badge">
-              <i class="ri-notification-4-line text-dark"></i>
-              <span class="nav_badge_body">1+</span>
+              <i class="ri-notification-2-fill"></i>
+              <span class="nav_badge_body">{{ useNotifStore().jmlNotif }}</span>
             </div>
             <div
               :class="{ notif_active: dropdown.notif }"
               class="drop_notif_container"
             >
               <ul class="drop_notif_content">
+                <h3>Notification ({{ useNotifStore().jmlNotif }})</h3>
                 <li
                   v-for="item in useNotifStore().notification"
                   :key="item.id"
                   class="drop_notif_item"
                 >
-                  <div class="notif_item_image">
-                    <img :src="item.image_url" alt="" />
+                  <div>
+                    <div class="notif_item_image">
+                      <img :src="item.image_url" alt="" />
+                    </div>
                   </div>
                   <div class="notif_item_detail">
-                    <h3 class="m-0">
+                    <div class="notif_item_type">
+                      <p class="m-0">{{ item.notification_type }}</p>
+                      <p v-if="item.status == 'create'" class="m-0">
+                        Product berhasil diterbitkan
+                      </p>
+                      <p v-if="item.status == 'bid'" class="m-0">
+                        Penawaran Product
+                      </p>
+                      <p v-if="item.status == 'accepted'" class="m-0">
+                        Penawaran telah diterima
+                      </p>
+                      <p v-if="item.status == 'declined'" class="m-0">
+                        Penawaran ditolak
+                      </p>
+                      <span class="m-0">{{ formatDate(item.updatedAt) }}</span>
+                    </div>
+                    <h3 class="notif_item_title m-0">
                       {{ item.product_name }}
                     </h3>
-                    <del class="m-0">Rp. {{ item.base_price }}</del>
-                    <p class="m-0">Rp. {{ item.bid_price }}</p>
+                    <div class="notif_item_price">
+                      <p v-if="item.status == 'create'" class="m-0">
+                        Rp. {{ item.base_price }}
+                      </p>
+
+                      <del v-if="item.status == 'bid'" class="m-0">
+                        Rp. {{ item.base_price }}
+                      </del>
+
+                      <p v-if="item.status == 'bid'" class="m-0">
+                        Ditawar Rp. {{ item.bid_price }}
+                      </p>
+                      <p
+                        v-if="item.status == 'declined' && 'accepted'"
+                        class="m-0"
+                      >
+                        Saya tawar Rp. {{ item.bid_price }}
+                      </p>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -110,7 +143,7 @@ onMounted(() => {
             @click="dropdown.profile = !dropdown.profile"
           >
             <div class="nav_icon">
-              <i class="ri-user-3-line text-dark"></i>
+              <i class="ri-user-3-fill"></i>
             </div>
             <!-- ---- Dropdown Profile ----  -->
             <div
@@ -120,9 +153,11 @@ onMounted(() => {
               <ul class="drop_profile">
                 <li class="drop_list_item">
                   <div class="drop_info_profile_image">
-                    <img src="../assets/logo.svg" />
+                    <img :src="useAuthStore().userId.image_url" />
                   </div>
-                  <h5 class="m-0">Fadilatur Rohman</h5>
+                  <h5 class="drop_profile_name m-0">
+                    {{ useAuthStore().userId.full_name }}
+                  </h5>
                 </li>
                 <hr />
                 <li @click="router.push('/profilesaya')" class="drop_list_item">
@@ -173,15 +208,13 @@ onMounted(() => {
 </template>
 <style scoped>
 .navbar {
-  height: 4rem;
+  height: 4.5rem;
   background-color: var(--body-color);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   z-index: 99;
 }
 .bg-scrool {
-  background-color: var(--first-color);
-}
-.logo-scrool {
-  color: #fff !important;
+  background-color: var(--body-color);
 }
 /* ===== Logo =====*/
 .navbar-brand {
@@ -190,20 +223,17 @@ onMounted(() => {
   color: var(--first-color);
   cursor: pointer;
 }
+.nav-search {
+  width: 500px;
+}
 /* ===== Menu =====*/
 .nav_icon {
-  font-size: 1rem;
+  font-size: var(--h3-font-size);
+  color: var(--text-color);
   cursor: pointer;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.3rem;
-  border-radius: 50%;
 }
 .nav_icon:hover {
-  background-color: rgb(243, 243, 243);
+  color: var(--text-color-alt);
 }
 .btn_login {
   display: inline-flex;
@@ -216,23 +246,21 @@ onMounted(() => {
 .nav_badge_body {
   position: absolute;
   background-color: rgb(231, 4, 4);
+  border: 2px solid var(--body-color);
   font-size: 0.6rem;
   color: #fff;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: -3px;
-  right: 0px;
+  top: -7px;
+  right: -7px;
 }
 /* ===== Toggle =====*/
 .navbar-toggler:focus {
   box-shadow: none;
-}
-.text_menu {
-  display: none;
 }
 .navbar-toggler {
   border: none;
@@ -260,27 +288,32 @@ onMounted(() => {
   display: grid;
   row-gap: 1rem;
 }
+.drop_profile_name {
+  font-size: var(--h3-font-size);
+}
 .drop_list_item {
   display: flex;
-  gap: 1rem;
+  column-gap: var(--mb-0-5);
   align-items: center;
   cursor: pointer;
 }
 .drop_icon {
-  width: 3rem;
+  width: 2rem;
   height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgb(231, 230, 230);
 }
 .drop_list_item:hover {
   font-weight: 700;
+  color: var(--first-color);
 }
 .drop_info_profile_image {
   width: 30px;
   height: 30px;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 .drop_title {
   width: 100%;
@@ -291,26 +324,34 @@ hr {
 /* ===== Drop Notif ===== */
 .drop_notif_container {
   position: absolute;
-  top: 100%;
-  right: 15%;
+  top: 80%;
+  right: 14%;
   width: 400px;
   max-height: 0px;
+  overflow: auto;
+  border-radius: 1rem;
   transition: max-height 0.4s;
-  overflow: hidden;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  border-top: 1;
 }
 .notif_active {
-  max-height: 400px;
+  max-height: 300px;
 }
 .drop_notif_content {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 1rem 0;
-  overflow-x: scroll;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+}
+.drop_notif_content h3 {
+  font-size: var(--normal-font-size);
+  margin-left: var(--mb-0-5);
 }
 .notif_item_image {
   width: 50px;
   height: 50px;
-  background-color: #ccc;
+  background-color: var(--body-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0.5rem;
   overflow: hidden;
 }
@@ -319,17 +360,36 @@ hr {
   display: flex;
   column-gap: 1rem;
   cursor: pointer;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 .drop_notif_item:hover {
   background-color: rgb(228, 228, 228);
 }
-.notif_item_detail h3 {
-  font-size: 1rem;
+.drop_notif_item:hover .notif_item_detail h3 {
+  color: var(--first-color);
 }
-.notif_item_detail p,
-.notif_item_detail del {
+.notif_item_detail h3 {
+  font-size: var(--normal-font-size);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+.notif_item_price {
+  display: flex;
+  column-gap: 1rem;
+}
+.notif_item_price p,
+.notif_item_price del {
   font-size: 0.75rem;
+}
+.notif_item_type {
+  display: flex;
+}
+.notif_item_type p,
+.notif_item_type span {
+  font-size: 0.6rem;
+  padding-right: 0.5rem;
 }
 /* ====== BreacPoint Mobile Device ====== */
 @media screen and (max-width: 567px) {

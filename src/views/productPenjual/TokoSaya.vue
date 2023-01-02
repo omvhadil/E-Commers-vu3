@@ -9,25 +9,24 @@ onMounted(() => {
 </script>
 <template>
   <div id="bodi" class="mains">
-    <div class="mt-3">
-      <h5>Product Jual Saya</h5>
-      <!-- ===== info penjual ===== -->
-      <div class="card-profile">
-        <div class="col-profile">
-          <div class="card-image me-2" style="width: 50px; height: 50px">
-            <img
-              :src="useAuthStore().userId.image_url"
-              class="rounded me-3 img-profile"
-            />
-          </div>
-          <div>
-            <h6 class="m-0">{{ useAuthStore().userId.full_name }}</h6>
-            <span style="color: #aaa">{{ useAuthStore().userId.city }}</span>
-          </div>
+    <h5>Toko Saya</h5>
+    <!-- ===== info penjual ===== -->
+    <div class="card-profile">
+      <div class="col-profile">
+        <div class="card-image me-2" style="width: 50px; height: 50px">
+          <img
+            :src="useAuthStore().userId.image_url"
+            class="rounded me-3 img-profile"
+          />
+        </div>
+        <div>
+          <h6 class="m-0">{{ useAuthStore().userId.full_name }}</h6>
+          <span style="color: #aaa">{{ useAuthStore().userId.city }}</span>
         </div>
       </div>
     </div>
     <div class="container_product_saya gap-3" style="width: 100%">
+      <!-- ==== Toko saya ==== -->
       <div>
         <div class="col-kategori border rounded">
           <h6>Toko saya</h6>
@@ -56,6 +55,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <!-- ==== container Product ==== -->
       <div>
         <div class="content-product gap-3 grid">
           <!-- ========== card tambah product ============== -->
@@ -69,12 +69,17 @@ onMounted(() => {
 .cursor {
   cursor: pointer;
 }
+.mains h5 {
+  font-size: var(--h3-font-size);
+  margin-bottom: var(--mb-1);
+}
 /* === Profile === */
 .card-profile {
   background-color: var(--body-color);
   display: flex;
   align-items: center;
   padding: 0.5rem;
+  border: 1px solid var(--border-color);
 }
 .col-profile {
   display: flex;
@@ -84,10 +89,7 @@ onMounted(() => {
   height: 100%;
   object-fit: cover;
 }
-.actived {
-  color: var(--first-color) !important;
-  font-weight: 600;
-}
+/* === Toko Saya === */
 .container_product_saya {
   display: grid;
   grid-template-columns: 300px auto;
@@ -98,17 +100,23 @@ onMounted(() => {
   padding: 1rem;
   background-color: var(--body-color);
 }
+.actived {
+  color: var(--first-color) !important;
+  font-weight: 600;
+}
 .col-products {
   width: 100%;
   padding: 1rem;
   background-color: var(--body-color);
 }
+/* === Product Saya === */
 .content-product {
   width: 100%;
   padding: 0.5rem;
   background-color: var(--body-color);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border-color);
 }
 @media screen and (max-width: 767px) {
   .container_product_saya {

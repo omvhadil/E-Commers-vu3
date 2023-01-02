@@ -40,16 +40,10 @@ onMounted(() => {
           </p>
           <h5 class="product_bit_price mm-0">Ditawar : Rp {{ item.price }}</h5>
         </div>
-        <div>
-          <div>
-            <p
-              class="m-0"
-              :class="kondisiStatus(item.status)"
-              v-if="item.status"
-            >
-              {{ item.status }}
-            </p>
-          </div>
+        <div class="content_status">
+          <p class="m-0" :class="kondisiStatus(item.status)" v-if="item.status">
+            {{ item.status }}
+          </p>
         </div>
       </div>
     </div>
@@ -67,6 +61,9 @@ onMounted(() => {
   display: flex;
   column-gap: 1rem;
   background-color: #fff;
+}
+.detail_product {
+  width: 100%;
 }
 .image_product {
   width: 100px;
@@ -87,11 +84,9 @@ onMounted(() => {
 .statuss_declined,
 .statuss_seller {
   background-color: rgb(233, 157, 17);
-  padding: 0.5rem;
+  padding: 0.2rem 0.7rem;
   color: #fff;
   border-radius: 1rem;
-  display: flex;
-  align-items: center;
 }
 .statuss_accepted {
   background-color: rgb(19, 163, 6);
@@ -101,5 +96,10 @@ onMounted(() => {
 }
 .statuss_seller {
   background-color: rgb(39, 17, 233);
+}
+.content_status {
+  display: block;
+  display: flex;
+  align-items: center;
 }
 </style>

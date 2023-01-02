@@ -4,22 +4,20 @@ import { useRoute } from "vue-router";
 import { useSellerStore } from "../stores";
 import { formatDate } from "../plugin";
 
-const tawarProduct = useRoute().params.id;
+const id = useRoute().params.id;
 
 const onStatus = (status) => {
   const data = {
     status: status,
   };
-  if (confirm("Apakah anda menolak tawaran ini?")) {
-    useSellerStore()
-      .postSellerOrder(tawarProduct, data)
-      .then(() => {
-        useSellerStore().getPenawarProduct(tawarProduct);
-      });
-  }
+  useSellerStore()
+    .postSellerOrder(id, data)
+    .then(() => {
+      useSellerStore().getPenawarProduct(id);
+    });
 };
 onMounted(() => {
-  useSellerStore().getPenawarProduct(tawarProduct);
+  useSellerStore().getPenawarProduct(id);
 });
 </script>
 <template>
